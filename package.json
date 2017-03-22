@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "http-server -a localhost -p 9090",
-    "test": "mocha **/*.spec.js",
+    "test": "mocha **/**/*.spec.js",
     "echo": "echo $PATH"
   },
   "author": "Ravi Ojha <rbojha008@gmail.com>",

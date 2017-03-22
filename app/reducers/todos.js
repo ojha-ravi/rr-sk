@@ -1,45 +1,3 @@
-/*import { createStore } from "redux";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-
-const counter = (state = 0, action) => {
-	switch(action.type) {
-		case "INCREMENT":
-			return state + 1;
-		case "DECREMENT":
-			return state - 1;
-		default:
-			return state;
-	}
-}
-
-const Counter = ({ value, onIncrement, onDecrement }) => {
-	return <div>
-		<h1>{value}</h1>
-		<button onClick={onIncrement}>+</button>
-		<button onClick={onDecrement}>-</button>
-	</div>;
-}
-
-const store = createStore(counter);
-const render = () => {
-	ReactDOM.render(
-	<Counter
-		value={store.getState()}
-		onIncrement={() => {
-			store.dispatch({type: "INCREMENT"})
-		}}
-		onDecrement={() => {
-			store.dispatch({type: "DECREMENT"})
-		}}/>,
-	document.querySelector(".root"));
-};
-
-store.subscribe(render);
-
-render();*/
-
-
 import { createStore } from "redux";
 
 const todo = (state, action) => {
@@ -101,7 +59,7 @@ const todoApp = (state = {}, action) => {
 const store = createStore(todoApp);
 
 console.log("Initial State");
-console.log(store.getState());
+console/log(store.getState());
 console.log("---------------");
 
 console.log("Dispaching ADD_TODO.")
@@ -113,7 +71,7 @@ store.dispatch({
 console.log("---------------");
 
 console.log("Current State");
-console.log(store.getState());
+console/log(store.getState());
 console.log("---------------");
 
 console.log("Dispaching ADD_TODO.")
@@ -125,7 +83,7 @@ store.dispatch({
 console.log("---------------");
 
 console.log("Current State");
-console.log(store.getState());
+console/log(store.getState());
 console.log("---------------");
 
 console.log("Dispaching TOGGLE_TODO.")
@@ -136,16 +94,5 @@ store.dispatch({
 console.log("---------------");
 
 console.log("Current State");
-console.log(store.getState());
-console.log("---------------");
-
-console.log("Dispaching SET_VISIBILITY_FILTER.")
-store.dispatch({
-	type: "SET_VISIBILITY_FILTER",
-	filter: "SHOW_COMPLETED"
-});
-console.log("---------------");
-
-console.log("Current State");
-console.log(store.getState());
+console/log(store.getState());
 console.log("---------------");
