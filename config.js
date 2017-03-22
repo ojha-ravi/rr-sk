@@ -17,6 +17,7 @@ System.config({
     "babel": "npm:babel-core@5.8.38",
     "babel-runtime": "npm:babel-runtime@5.8.38",
     "core-js": "npm:core-js@1.2.7",
+    "deep-freeze": "npm:deep-freeze@0.0.1",
     "react": "npm:react@15.4.2",
     "react-dom": "npm:react-dom@15.4.2",
     "redux": "npm:redux@3.6.0",
