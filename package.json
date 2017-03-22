@@ -11,6 +11,7 @@
   "author": "Ravi Ojha <rbojha008@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "deep-freeze": "0.0.1",
     "expect": "^1.20.2",
     "http-server": "^0.9.0",
     "jspm": "^0.16.53",
@@ -18,7 +19,6 @@
   },
   "jspm": {
     "dependencies": {
-      "deep-freeze": "npm:deep-freeze@^0.0.1",
       "react": "npm:react@^15.4.2",
       "react-dom": "npm:react-dom@^15.4.2",
       "redux": "npm:redux@^3.6.0"
