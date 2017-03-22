@@ -1,4 +1,5 @@
-import { createStore } from "redux";
+// import { createStore } from "redux";
+const createStore = require("redux").createStore;
 
 const todo = (state, action) => {
 	switch(action.type) {
@@ -59,20 +60,21 @@ const todoApp = (state = {}, action) => {
 const store = createStore(todoApp);
 
 console.log("Initial State");
-console/log(store.getState());
 console.log("---------------");
+console.log(JSON.stringify(store.getState(),undefined, 2));
+console.log("---------------\n");
 
 console.log("Dispaching ADD_TODO.")
 store.dispatch({
 	type: "ADD_TODO",
 	id: 0,
-	text: "Learn Redux"
 });
-console.log("---------------");
+console.log("---------------\n");
 
 console.log("Current State");
-console/log(store.getState());
 console.log("---------------");
+console.log(JSON.stringify(store.getState(),undefined, 2));
+console.log("---------------\n");
 
 console.log("Dispaching ADD_TODO.")
 store.dispatch({
@@ -80,19 +82,45 @@ store.dispatch({
 	id: 1,
 	text: "Go Shopping"
 });
-console.log("---------------");
+console.log("---------------\n");
 
 console.log("Current State");
-console/log(store.getState());
 console.log("---------------");
+console.log(JSON.stringify(store.getState(),undefined, 2));
+console.log("---------------\n");
 
 console.log("Dispaching TOGGLE_TODO.")
 store.dispatch({
 	type: "TOGGLE_TODO",
 	id: 0,
 });
-console.log("---------------");
+console.log("---------------\n");
 
 console.log("Current State");
-console/log(store.getState());
 console.log("---------------");
+console.log(JSON.stringify(store.getState(),undefined, 2));
+console.log("---------------\n");
+
+console.log("Dispaching SET_VISIBILITY_FILTER.")
+store.dispatch({
+	type: "SET_VISIBILITY_FILTER",
+	filter: "SHOW_COMPLETED"
+});
+console.log("---------------\n");
+
+console.log("Current State");
+console.log("---------------");
+console.log(JSON.stringify(store.getState(),undefined, 2));
+console.log("---------------\n");
+
+console.log("Dispaching SET_VISIBILITY_FILTER.")
+store.dispatch({
+	type: "SET_VISIBILITY_FILTER",
+	filter: "SHOW_NOT_COMPLETED"
+});
+console.log("---------------\n");
+
+console.log("Current State");
+console.log("---------------");
+console.log(JSON.stringify(store.getState(),undefined, 2));
+console.log("---------------\n");
