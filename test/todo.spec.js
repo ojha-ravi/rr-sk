@@ -1,44 +1,100 @@
 const expect = require("expect");
 const deepFreeze = require("deep-freeze");
 
-const toggleTodo = (todo) => {
-	// todo.completed = !todo.completed;
-	// return todo;
+const todo = (state, action) => {
+	switch(action.type) {
+		case "ADD_TODO":
+			return {
+				id: action.id,
+				text: action.text,
+				completed: false
+			};
+		case "TOGGLE_TODO":
+			if (state.id === action.id) {
+				return Object.assign({}, state, {
+					completed: !state.completed
+				});
+			}
+			return state;
+		default:
+			return state;
+	}
+};
 
-	// return {
-	// 	id: todo.id,
-	// 	text: todo.text,
-	// 	completed: !todo.completed
-	// };
+const todos = (state = [], action) => {
+	switch(action.type) {
+		case "ADD_TODO":
+			return [
+				...state,
+				todo(undefined, action)
+			];
+		case "TOGGLE_TODO":
+			return state.map(t => todo(t, action));
+		default:
+			return state;
+	}
+};
 
-	return Object.assign({}, todo, {
-		completed: !todo.completed
-	});
+const testAddTodo = () => {
+	const stateBefore = [];
+	const action = {
+		type: "ADD_TODO",
+		id: 0,
+		text: "Learn Redux"
+	};
+	const stateAfter = [
+		{
+			id: 0,
+			text: "Learn Redux",
+			completed: false
+		}
+	];
 
-	// return {
-	// 	...todo,
-	// 	completed: !todo.completed
-	// }	es7 (proposed), preset-state-2 (babel)
+	deepFreeze(stateBefore);
+	deepFreeze(action);
+
+	expect(
+		todos(stateBefore, action)
+	).toEqual(stateAfter);
 };
 
 const testToggleTodo = () => {
-	const todoBefore = {
-		id: 0,
-		text: "Lear Redux",
-		completed: false
+	const stateBefore = [
+		{
+			id: 0,
+			text: "Learn Redux",
+			completed: false
+		},
+		{
+			id: 1,
+			text: "Go Shopping",
+			completed: false
+		}
+	];
+	const action = {
+		type: "TOGGLE_TODO",
+		id: 1
 	};
+	const stateAfter = [
+		{
+			id: 0,
+			text: "Learn Redux",
+			completed: false
+		},
+		{
+			id: 1,
+			text: "Go Shopping",
+			completed: true
+		}
+	];
 
-	const todoAfter = {
-		id: 0,
-		text: "Lear Redux",
-		completed: true
-	};
-
-	deepFreeze(todoBefore);
+	deepFreeze(stateBefore);
+	deepFreeze(action);
 
 	expect(
-		toggleTodo(todoBefore)
-	).toEqual(todoAfter);
+		todos(stateBefore, action)
+	).toEqual(stateAfter);
 };
 
+testAddTodo();
 testToggleTodo();
