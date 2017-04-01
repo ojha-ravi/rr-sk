@@ -55,28 +55,29 @@ const store = Redux.createStore(todoApp);
 let nextTodoId = 0;
 class TodoApp extends React.Component {
 	render() {
-		/*return <div>
+		return <div>
+			<input ref={node => {
+				this.input = node
+			}}></input>
 			<button onClick={() => {
 				store.dispatch({
 					type: "ADD_TODO",
-					text: "Test",
+					text: this.input.value,
 					id: nextTodoId++
 				});
-			}}></button>
+				this.input.value = "";
+			}}>Add Todo</button>
 			<ul>
-				{
-					this.props.todos.map(t => {
-						<li key={t.id}>{store.getState().todos}</li>
-					})
-				}
+				{this.props.todos.map(t => <li key={t.id}>{t.text}</li>)}
 			</ul>
-		</div>;*/
-		return <div>Hello World</div>;
+		</div>;
 	}
 }
 
 const render = () => {
-	ReactDOM.render(<TodoApp />, document.querySelector(".root"));
+	ReactDOM.render(
+	<TodoApp todos={store.getState().todos}/>,
+	document.querySelector(".root"));
 };
 
 store.subscribe(render);
