@@ -115,7 +115,7 @@ System.config({
       "buffer": "github:jspm/nodelibs-buffer@0.1.0",
       "iconv-lite": "npm:iconv-lite@0.4.15"
     },
-    "npm:fbjs@0.8.11": {
+    "npm:fbjs@0.8.12": {
       "core-js": "npm:core-js@1.2.7",
       "isomorphic-fetch": "npm:isomorphic-fetch@2.2.1",
       "loose-envify": "npm:loose-envify@1.3.1",
@@ -187,14 +187,14 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:react-dom@15.4.2": {
-      "fbjs": "npm:fbjs@0.8.11",
+      "fbjs": "npm:fbjs@0.8.12",
       "loose-envify": "npm:loose-envify@1.3.1",
       "object-assign": "npm:object-assign@4.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2",
       "react": "npm:react@15.4.2"
     },
     "npm:react@15.4.2": {
-      "fbjs": "npm:fbjs@0.8.11",
+      "fbjs": "npm:fbjs@0.8.12",
       "loose-envify": "npm:loose-envify@1.3.1",
       "object-assign": "npm:object-assign@4.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
