@@ -59,7 +59,8 @@ const store = Redux.createStore(todoApp);
 let nextTodoId = 0;
 class TodoApp extends React.Component {
 	render() {
-		const visibleTodos = getVisibleTodods(this.props.todos, this.props.visibilityFilter);
+		const {todos, visibilityFilter} = this.props;
+		const visibleTodos = getVisibleTodods(todos, visibilityFilter);
 		return <div>
 			<input ref={node => {
 				this.input = node
@@ -85,9 +86,9 @@ class TodoApp extends React.Component {
 			</ul>
 			<p>
 				Show: {' '}
-				<FilterLink filter={"SHOW_ALL"} currentFilter={this.props.visibilityFilter}>ALL</FilterLink>{' '}
-				<FilterLink filter={"SHOW_ACTIVE"} currentFilter={this.props.visibilityFilter}>Active</FilterLink>{' '}
-				<FilterLink filter={"SHOW_COMPLETED"} currentFilter={this.props.visibilityFilter}>Completed</FilterLink>
+				<FilterLink filter={"SHOW_ALL"} currentFilter={visibilityFilter}>ALL</FilterLink>{' '}
+				<FilterLink filter={"SHOW_ACTIVE"} currentFilter={visibilityFilter}>Active</FilterLink>{' '}
+				<FilterLink filter={"SHOW_COMPLETED"} currentFilter={visibilityFilter}>Completed</FilterLink>
 			</p>
 		</div>;
 	}
