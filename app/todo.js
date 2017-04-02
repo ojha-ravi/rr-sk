@@ -56,6 +56,17 @@ const todoApp = Redux.combineReducers({
 
 const store = Redux.createStore(todoApp);
 
+const getVisibleTodods = (todos, filter) => {
+	switch(filter) {
+		case "SHOW_ALL":
+			return todos;
+		case "SHOW_ACTIVE":
+			return todos.filter(t => !t.completed);
+		case "SHOW_COMPLETED":
+			return todos.filter(t => t.completed);
+	}
+}
+
 const Todo = ({onClick, completed, text}) => {
 	return <li onClick={onClick} style={{textDecoration: completed ? "line-through": "none"}}>{text}</li>;
 };
@@ -119,25 +130,14 @@ const TodoApp = ({todos, visibilityFilter}) => {
 	</div>;
 }
 
-const getVisibleTodods = (todos, filter) => {
-	switch(filter) {
-		case "SHOW_ALL":
-			return todos;
-		case "SHOW_ACTIVE":
-			return todos.filter(t => !t.completed);
-		case "SHOW_COMPLETED":
-			return todos.filter(t => t.completed);
-	}
-}
-
 const FilterLink = ({filter, currentFilter, children, onClick}) => {
 	if (currentFilter === filter) {
 		return <span>{children}</span>
 	}
 	return <a href="#" onClick={e => {
-			e.preventDefault();
-			onClick(filter)
-		}}>{children}</a>;
+		e.preventDefault();
+		onClick(filter)
+	}}>{children}</a>;
 }
 
 const render = () => {
