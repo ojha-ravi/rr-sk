@@ -56,6 +56,22 @@ const todoApp = Redux.combineReducers({
 
 const store = Redux.createStore(todoApp);
 
+const Todo = ({onClick, completed, text}) => {
+	return <li onClick={onClick} style={{textDecoration: completed ? "line-through": "none"}}>{text}</li>;
+};
+
+const TodoList = ({todos, onTodoClick}) => {
+	return <ul>
+		{
+			todos.map(todo => {
+				return <Todo
+					key={todo.id}
+					onClick={() => onTodoClick(todo.id)} completed={todo.completed} text={todo.text}></Todo>;
+			})
+		}
+	</ul>
+};
+
 let nextTodoId = 0;
 class TodoApp extends React.Component {
 	render() {
@@ -73,20 +89,15 @@ class TodoApp extends React.Component {
 				});
 				this.input.value = "";
 			}}>Add Todo</button>
-			<ul>
-				{
-					visibleTodos.map(todo => <li key={todo.id} onClick={() => {
-							store.dispatch({
-								type: "TOGGLE_TODO",
-								id: todo.id
-							});
-						}}
-					style={{textDecoration: todo.completed ? "line-through": "none"}}>{todo.text}</li>)
-				}
-			</ul>
+			<TodoList todos={visibleTodos} onTodoClick={id => {
+				store.dispatch({
+					type: "TOGGLE_TODO",
+					id
+				})
+			}}></TodoList>
 			<p>
 				Show: {' '}
-				<FilterLink filter={"SHOW_ALL"} currentFilter={visibilityFilter}>ALL</FilterLink>{' '}
+				<FilterLink filter={"SHOW_ALL"} currentFilter={visibilityFilter}>All</FilterLink>{' '}
 				<FilterLink filter={"SHOW_ACTIVE"} currentFilter={visibilityFilter}>Active</FilterLink>{' '}
 				<FilterLink filter={"SHOW_COMPLETED"} currentFilter={visibilityFilter}>Completed</FilterLink>
 			</p>
