@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { store } from "./todo_reducer"
+import { store as gStore} from "./todo_reducer"
 
 const getVisibleTodods = (todos, filter) => {
 	switch(filter) {
@@ -14,15 +14,15 @@ const getVisibleTodods = (todos, filter) => {
 }
 
 let nextTodoId = 0;
-const TodoApp = () => {
+const TodoApp = ({ store }) => {
 	return <div>
-		<AddTodo></AddTodo>
-		<VisibleTodoList></VisibleTodoList>
-		<Footer></Footer>
+		<AddTodo store={store}></AddTodo>
+		<VisibleTodoList store={store}></VisibleTodoList>
+		<Footer store={store}></Footer>
 	</div>;
 }
 
-const AddTodo = () => {
+const AddTodo = ({ store }) => {
 	let input;
 	return <div>
 		<input ref={node => {
@@ -41,6 +41,7 @@ const AddTodo = () => {
 
 class VisibleTodoList extends React.Component {
 	componentDidMount() {
+		const { store } = this.props;
 		this.unsubscribe = store.subscribe(() => {
 			this.forceUpdate();
 		});
@@ -51,6 +52,7 @@ class VisibleTodoList extends React.Component {
 	}
 
 	render() {
+		const { store } = this.props;
 		const props = this.props;
 		const state = store.getState();
 
@@ -62,7 +64,7 @@ class VisibleTodoList extends React.Component {
 					id
 				});
 			}}
-		></TodoList>
+		></TodoList>;
 	}
 }
 
@@ -75,24 +77,25 @@ const TodoList = ({todos, onTodoClick}) => {
 					onClick={() => onTodoClick(todo.id)} completed={todo.completed} text={todo.text}></Todo>;
 			})
 		}
-	</ul>
+	</ul>;
 };
 
 const Todo = ({onClick, completed, text}) => {
 	return <li onClick={onClick} style={{textDecoration: completed ? "line-through": "none"}}>{text}</li>;
 };
 
-const Footer = () => {
+const Footer = ({ store }) => {
 	return <p>
 		Show: {' '}
-		<FilterLink filter={"SHOW_ALL"}>All</FilterLink>{' '}
-		<FilterLink filter={"SHOW_ACTIVE"}>Active</FilterLink>{' '}
-		<FilterLink filter={"SHOW_COMPLETED"}>Completed</FilterLink>
-	</p>
+		<FilterLink store={store} filter={"SHOW_ALL"}>All</FilterLink>{' '}
+		<FilterLink store={store} filter={"SHOW_ACTIVE"}>Active</FilterLink>{' '}
+		<FilterLink store={store} filter={"SHOW_COMPLETED"}>Completed</FilterLink>
+	</p>;
 }
 
 class FilterLink extends React.Component {
 	componentDidMount() {
+		const { store } = this.props;
 		this.unsubscribe = store.subscribe(() => {
 			this.forceUpdate();
 		});
@@ -103,6 +106,7 @@ class FilterLink extends React.Component {
 	}
 
 	render() {
+		const { store } = this.props;
 		const props = this.props;
 		const state = store.getState();
 
@@ -114,7 +118,7 @@ class FilterLink extends React.Component {
 					filter: props.filter
 				});
 			}}
-		>{props.children}</Link>
+		>{props.children}</Link>;
 	}
 }
 
@@ -128,4 +132,4 @@ const Link = ({active, children, onClick}) => {
 	}}>{children}</a>;
 }
 
-ReactDOM.render( <TodoApp {...store.getState()}/>, document.querySelector(".root"));
+ReactDOM.render( <TodoApp store={gStore}/>, document.querySelector(".root"));
