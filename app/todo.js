@@ -72,37 +72,51 @@ const TodoList = ({todos, onTodoClick}) => {
 	</ul>
 };
 
-let nextTodoId = 0;
-class TodoApp extends React.Component {
-	render() {
-		const {todos, visibilityFilter} = this.props;
-		const visibleTodos = getVisibleTodods(todos, visibilityFilter);
-		return <div>
-			<input ref={node => {
-				this.input = node
+const AddTodo = ({onAddClick}) => {
+	let input;
+	return <div>
+		<input ref={node => {
+				input = node
 			}}></input>
 			<button onClick={() => {
-				store.dispatch({
-					type: "ADD_TODO",
-					text: this.input.value,
-					id: nextTodoId++
-				});
-				this.input.value = "";
+				onAddClick(input.value);
+				input.value = "";
 			}}>Add Todo</button>
-			<TodoList todos={visibleTodos} onTodoClick={id => {
-				store.dispatch({
-					type: "TOGGLE_TODO",
-					id
-				})
-			}}></TodoList>
-			<p>
-				Show: {' '}
-				<FilterLink filter={"SHOW_ALL"} currentFilter={visibilityFilter}>All</FilterLink>{' '}
-				<FilterLink filter={"SHOW_ACTIVE"} currentFilter={visibilityFilter}>Active</FilterLink>{' '}
-				<FilterLink filter={"SHOW_COMPLETED"} currentFilter={visibilityFilter}>Completed</FilterLink>
-			</p>
-		</div>;
-	}
+	</div>;
+}
+
+const Footer = ({visibilityFilter, onFilterClick}) => {
+	return <p>
+		Show: {' '}
+		<FilterLink filter={"SHOW_ALL"} currentFilter={visibilityFilter} onClick={onFilterClick}>All</FilterLink>{' '}
+		<FilterLink filter={"SHOW_ACTIVE"} currentFilter={visibilityFilter} onClick={onFilterClick}>Active</FilterLink>{' '}
+		<FilterLink filter={"SHOW_COMPLETED"} currentFilter={visibilityFilter} onClick={onFilterClick}>Completed</FilterLink>
+	</p>
+}
+
+let nextTodoId = 0;
+const TodoApp = ({todos, visibilityFilter}) => {
+	return <div>
+		<AddTodo onAddClick={text => {
+			store.dispatch({
+				type: "ADD_TODO",
+				text: text,
+				id: nextTodoId++
+			});
+		}}></AddTodo>
+		<TodoList todos={getVisibleTodods(todos, visibilityFilter)} onTodoClick={id => {
+			store.dispatch({
+				type: "TOGGLE_TODO",
+				id
+			})
+		}}></TodoList>
+		<Footer visibilityFilter={visibilityFilter} onFilterClick={filter => {
+			store.dispatch({
+				type: "SET_VISIBILITY_FILTER",
+				filter
+			})
+		}}></Footer>
+	</div>;
 }
 
 const getVisibleTodods = (todos, filter) => {
@@ -116,16 +130,13 @@ const getVisibleTodods = (todos, filter) => {
 	}
 }
 
-const FilterLink = ({filter, currentFilter, children}) => {
+const FilterLink = ({filter, currentFilter, children, onClick}) => {
 	if (currentFilter === filter) {
 		return <span>{children}</span>
 	}
 	return <a href="#" onClick={e => {
 			e.preventDefault();
-			store.dispatch({
-				type: "SET_VISIBILITY_FILTER",
-				filter
-			})
+			onClick(filter)
 		}}>{children}</a>;
 }
 
